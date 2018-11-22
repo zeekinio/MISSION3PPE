@@ -438,7 +438,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="videoppe3groupe2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="videoppe3groupe2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="client" EntityType="Self.client" />
           <EntitySet Name="emprunt" EntityType="Self.emprunt" />
           <EntitySet Name="episode" EntityType="Self.episode" />
@@ -523,7 +523,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="videoppe3groupe2ModelStoreContainer" CdmEntityContainer="videoppe3groupe2">
+        <EntityContainerMapping StorageEntityContainer="videoppe3groupe2ModelStoreContainer" CdmEntityContainer="videoppe3groupe2Entities">
           <EntitySetMapping Name="client">
             <EntityTypeMapping TypeName="videoppe3groupe2Model.client">
               <MappingFragment StoreEntitySet="client">

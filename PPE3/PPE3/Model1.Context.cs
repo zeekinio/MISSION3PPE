@@ -16,10 +16,10 @@ namespace PPE3
     using System.Data.Objects.DataClasses;
     using System.Linq;
     
-    public partial class videoppe3groupe2 : DbContext
+    public partial class videoppe3groupe2Entities : DbContext
     {
-        public videoppe3groupe2()
-            : base("name=videoppe3groupe2")
+        public videoppe3groupe2Entities()
+            : base("name=videoppe3groupe2Entities")
         {
         }
     
