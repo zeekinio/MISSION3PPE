@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="videoppe3groupe2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nomClient" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="prenomClient" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="emailClient" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="dateAbonnementClient" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="login" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="pwd" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="actif" Type="Int32" Nullable="false" />
+    <Property Name="admin" Type="Int32" />
+    <NavigationProperty Name="emprunt" Relationship="Self.fk_emprunt_client" FromRole="client" ToRole="emprunt" />
+  </EntityType>
+  <EntityType Name="emprunt">
+    <Key>
+      <PropertyRef Name="idEmprunt" />
+    </Key>
+    <Property Name="idEmprunt" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dateEmprunt" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="idClient" Type="Int32" Nullable="false" />
+    <Property Name="idSupport" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="client" Relationship="Self.fk_emprunt_client" FromRole="emprunt" ToRole="client" />
+    <NavigationProperty Name="support" Relationship="Self.fk_emprunt_support" FromRole="emprunt" ToRole="support" />
+  </EntityType>
+  <EntityType Name="episode">
+    <Key>
+      <PropertyRef Name="idSerie" />
+      <PropertyRef Name="numSaison" />
+      <PropertyRef Name="numEpisode" />
+    </Key>
+    <Property Name="idSerie" Type="Int32" Nullable="false" />
+    <Property Name="numSaison" Type="Int32" Nullable="false" />
+    <Property Name="numEpisode" Type="Int32" Nullable="false" />
+    <Property Name="titreEpisode" Type="String" MaxLength="150" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="duree" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="saison" Relationship="Self.fk_episode_saison" FromRole="episode" ToRole="saison" />
+  </EntityType>
+  <EntityType Name="film">
+    <Key>
+      <PropertyRef Name="idFilm" />
+    </Key>
+    <Property Name="idFilm" Type="Int32" Nullable="false" />
+    <Property Name="duree" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="support" Relationship="Self.fk_film_support" FromRole="film" ToRole="support" />
+  </EntityType>
+  <EntityType Name="genre">
+    <Key>
+      <PropertyRef Name="idGenre" />
+    </Key>
+    <Property Name="idGenre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="libelleGenre" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="support" Relationship="Self.fk_support_genre" FromRole="genre" ToRole="support" />
+  </EntityType>
+  <EntityType Name="saison">
+    <Key>
+      <PropertyRef Name="idSerie" />
+      <PropertyRef Name="numSaison" />
+    </Key>
+    <Property Name="idSerie" Type="Int32" Nullable="false" />
+    <Property Name="numSaison" Type="Int32" Nullable="false" />
+    <Property Name="anneeSaison" Type="Int32" Nullable="false" />
+    <Property Name="nbrEpisodesPrevus" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="episode" Relationship="Self.fk_episode_saison" FromRole="saison" ToRole="episode" />
+    <NavigationProperty Name="serie" Relationship="Self.fk_saison_serie" FromRole="saison" ToRole="serie" />
+  </EntityType>
+  <EntityType Name="serie">
+    <Key>
+      <PropertyRef Name="idSerie" />
+    </Key>
+    <Property Name="idSerie" Type="Int32" Nullable="false" />
+    <Property Name="resumeSerie" Type="String" MaxLength="150" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="saison" Relationship="Self.fk_saison_serie" FromRole="serie" ToRole="saison" />
+    <NavigationProperty Name="support" Relationship="Self.fk_serie_support" FromRole="serie" ToRole="support" />
+  </EntityType>
+  <EntityType Name="support">
+    <Key>
+      <PropertyRef Name="idSupport" />
+    </Key>
+    <Property Name="idSupport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="titreSupport" Type="String" MaxLength="150" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="realisateur" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="image" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="idGenre" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="emprunt" Relationship="Self.fk_emprunt_support" FromRole="support" ToRole="emprunt" />
+    <NavigationProperty Name="film" Relationship="Self.fk_film_support" FromRole="support" ToRole="film" />
+    <NavigationProperty Name="genre" Relationship="Self.fk_support_genre" FromRole="support" ToRole="genre" />
+    <NavigationProperty Name="serie" Relationship="Self.fk_serie_support" FromRole="support" ToRole="serie" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="fk_emprunt_client">
+    <End Role="client" Type="Self.client" Multiplicity="1" />
+    <End Role="emprunt" Type="Self.emprunt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="idClient" />
+      </Principal>
+      <Dependent Role="emprunt">
+        <PropertyRef Name="idClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_emprunt_support">
+    <End Role="support" Type="Self.support" Multiplicity="1" />
+    <End Role="emprunt" Type="Self.emprunt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="support">
+        <PropertyRef Name="idSupport" />
+      </Principal>
+      <Dependent Role="emprunt">
+        <PropertyRef Name="idSupport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_episode_saison">
+    <End Role="saison" Type="Self.saison" Multiplicity="1" />
+    <End Role="episode" Type="Self.episode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="saison">
+        <PropertyRef Name="idSerie" />
+        <PropertyRef Name="numSaison" />
+      </Principal>
+      <Dependent Role="episode">
+        <PropertyRef Name="idSerie" />
+        <PropertyRef Name="numSaison" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_film_support">
+    <End Role="support" Type="Self.support" Multiplicity="1" />
+    <End Role="film" Type="Self.film" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="support">
+        <PropertyRef Name="idSupport" />
+      </Principal>
+      <Dependent Role="film">
+        <PropertyRef Name="idFilm" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_support_genre">
+    <End Role="genre" Type="Self.genre" Multiplicity="1" />
+    <End Role="support" Type="Self.support" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="genre">
+        <PropertyRef Name="idGenre" />
+      </Principal>
+      <Dependent Role="support">
+        <PropertyRef Name="idGenre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_saison_serie">
+    <End Role="serie" Type="Self.serie" Multiplicity="1" />
+    <End Role="saison" Type="Self.saison" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="serie">
+        <PropertyRef Name="idSerie" />
+      </Principal>
+      <Dependent Role="saison">
+        <PropertyRef Name="idSerie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_serie_support">
+    <End Role="support" Type="Self.support" Multiplicity="1" />
+    <End Role="serie" Type="Self.serie" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="support">
+        <PropertyRef Name="idSupport" />
+      </Principal>
+      <Dependent Role="serie">
+        <PropertyRef Name="idSerie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="videoppe3groupe2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="client" EntityType="Self.client" />
+    <EntitySet Name="emprunt" EntityType="Self.emprunt" />
+    <EntitySet Name="episode" EntityType="Self.episode" />
+    <EntitySet Name="film" EntityType="Self.film" />
+    <EntitySet Name="genre" EntityType="Self.genre" />
+    <EntitySet Name="saison" EntityType="Self.saison" />
+    <EntitySet Name="serie" EntityType="Self.serie" />
+    <EntitySet Name="support" EntityType="Self.support" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="fk_emprunt_client" Association="Self.fk_emprunt_client">
+      <End Role="client" EntitySet="client" />
+      <End Role="emprunt" EntitySet="emprunt" />
+    </AssociationSet>
+    <AssociationSet Name="fk_emprunt_support" Association="Self.fk_emprunt_support">
+      <End Role="support" EntitySet="support" />
+      <End Role="emprunt" EntitySet="emprunt" />
+    </AssociationSet>
+    <AssociationSet Name="fk_episode_saison" Association="Self.fk_episode_saison">
+      <End Role="saison" EntitySet="saison" />
+      <End Role="episode" EntitySet="episode" />
+    </AssociationSet>
+    <AssociationSet Name="fk_film_support" Association="Self.fk_film_support">
+      <End Role="support" EntitySet="support" />
+      <End Role="film" EntitySet="film" />
+    </AssociationSet>
+    <AssociationSet Name="fk_support_genre" Association="Self.fk_support_genre">
+      <End Role="genre" EntitySet="genre" />
+      <End Role="support" EntitySet="support" />
+    </AssociationSet>
+    <AssociationSet Name="fk_saison_serie" Association="Self.fk_saison_serie">
+      <End Role="serie" EntitySet="serie" />
+      <End Role="saison" EntitySet="saison" />
+    </AssociationSet>
+    <AssociationSet Name="fk_serie_support" Association="Self.fk_serie_support">
+      <End Role="support" EntitySet="support" />
+      <End Role="serie" EntitySet="serie" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(videoppe3groupe2Model.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(videoppe3groupe2Model.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

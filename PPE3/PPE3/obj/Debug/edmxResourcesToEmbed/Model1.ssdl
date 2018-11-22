@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="videoppe3groupe2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nomClient" Type="char" MaxLength="60" Nullable="false" />
+    <Property Name="prenomClient" Type="char" MaxLength="60" Nullable="false" />
+    <Property Name="emailClient" Type="char" MaxLength="32" Nullable="false" />
+    <Property Name="dateAbonnementClient" Type="date" Nullable="false" />
+    <Property Name="login" Type="char" MaxLength="30" Nullable="false" />
+    <Property Name="pwd" Type="char" MaxLength="30" Nullable="false" />
+    <Property Name="actif" Type="int" Nullable="false" />
+    <Property Name="admin" Type="int" />
+  </EntityType>
+  <EntityType Name="emprunt">
+    <Key>
+      <PropertyRef Name="idEmprunt" />
+    </Key>
+    <Property Name="idEmprunt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dateEmprunt" Type="date" Nullable="false" />
+    <Property Name="idClient" Type="int" Nullable="false" />
+    <Property Name="idSupport" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="episode">
+    <Key>
+      <PropertyRef Name="idSerie" />
+      <PropertyRef Name="numSaison" />
+      <PropertyRef Name="numEpisode" />
+    </Key>
+    <Property Name="idSerie" Type="int" Nullable="false" />
+    <Property Name="numSaison" Type="int" Nullable="false" />
+    <Property Name="numEpisode" Type="int" Nullable="false" />
+    <Property Name="titreEpisode" Type="char" MaxLength="150" Nullable="false" />
+    <Property Name="duree" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="film">
+    <Key>
+      <PropertyRef Name="idFilm" />
+    </Key>
+    <Property Name="idFilm" Type="int" Nullable="false" />
+    <Property Name="duree" Type="char" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="genre">
+    <Key>
+      <PropertyRef Name="idGenre" />
+    </Key>
+    <Property Name="idGenre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="libelleGenre" Type="char" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="saison">
+    <Key>
+      <PropertyRef Name="idSerie" />
+      <PropertyRef Name="numSaison" />
+    </Key>
+    <Property Name="idSerie" Type="int" Nullable="false" />
+    <Property Name="numSaison" Type="int" Nullable="false" />
+    <Property Name="anneeSaison" Type="int" Nullable="false" />
+    <Property Name="nbrEpisodesPrevus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="serie">
+    <Key>
+      <PropertyRef Name="idSerie" />
+    </Key>
+    <Property Name="idSerie" Type="int" Nullable="false" />
+    <Property Name="resumeSerie" Type="char" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="support">
+    <Key>
+      <PropertyRef Name="idSupport" />
+    </Key>
+    <Property Name="idSupport" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titreSupport" Type="char" MaxLength="150" Nullable="false" />
+    <Property Name="realisateur" Type="char" MaxLength="60" Nullable="false" />
+    <Property Name="image" Type="char" MaxLength="30" Nullable="false" />
+    <Property Name="idGenre" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="fk_emprunt_client">
+    <End Role="client" Type="Self.client" Multiplicity="1" />
+    <End Role="emprunt" Type="Self.emprunt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="idClient" />
+      </Principal>
+      <Dependent Role="emprunt">
+        <PropertyRef Name="idClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_emprunt_support">
+    <End Role="support" Type="Self.support" Multiplicity="1" />
+    <End Role="emprunt" Type="Self.emprunt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="support">
+        <PropertyRef Name="idSupport" />
+      </Principal>
+      <Dependent Role="emprunt">
+        <PropertyRef Name="idSupport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_episode_saison">
+    <End Role="saison" Type="Self.saison" Multiplicity="1" />
+    <End Role="episode" Type="Self.episode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="saison">
+        <PropertyRef Name="idSerie" />
+        <PropertyRef Name="numSaison" />
+      </Principal>
+      <Dependent Role="episode">
+        <PropertyRef Name="idSerie" />
+        <PropertyRef Name="numSaison" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_film_support">
+    <End Role="support" Type="Self.support" Multiplicity="1" />
+    <End Role="film" Type="Self.film" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="support">
+        <PropertyRef Name="idSupport" />
+      </Principal>
+      <Dependent Role="film">
+        <PropertyRef Name="idFilm" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_saison_serie">
+    <End Role="serie" Type="Self.serie" Multiplicity="1" />
+    <End Role="saison" Type="Self.saison" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="serie">
+        <PropertyRef Name="idSerie" />
+      </Principal>
+      <Dependent Role="saison">
+        <PropertyRef Name="idSerie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_serie_support">
+    <End Role="support" Type="Self.support" Multiplicity="1" />
+    <End Role="serie" Type="Self.serie" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="support">
+        <PropertyRef Name="idSupport" />
+      </Principal>
+      <Dependent Role="serie">
+        <PropertyRef Name="idSerie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_support_genre">
+    <End Role="genre" Type="Self.genre" Multiplicity="1" />
+    <End Role="support" Type="Self.support" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="genre">
+        <PropertyRef Name="idGenre" />
+      </Principal>
+      <Dependent Role="support">
+        <PropertyRef Name="idGenre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="videoppe3groupe2ModelStoreContainer">
+    <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="emprunt" EntityType="Self.emprunt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="episode" EntityType="Self.episode" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="film" EntityType="Self.film" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="genre" EntityType="Self.genre" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="saison" EntityType="Self.saison" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="serie" EntityType="Self.serie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="support" EntityType="Self.support" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_emprunt_client" Association="Self.fk_emprunt_client">
+      <End Role="client" EntitySet="client" />
+      <End Role="emprunt" EntitySet="emprunt" />
+    </AssociationSet>
+    <AssociationSet Name="fk_emprunt_support" Association="Self.fk_emprunt_support">
+      <End Role="support" EntitySet="support" />
+      <End Role="emprunt" EntitySet="emprunt" />
+    </AssociationSet>
+    <AssociationSet Name="fk_episode_saison" Association="Self.fk_episode_saison">
+      <End Role="saison" EntitySet="saison" />
+      <End Role="episode" EntitySet="episode" />
+    </AssociationSet>
+    <AssociationSet Name="fk_film_support" Association="Self.fk_film_support">
+      <End Role="support" EntitySet="support" />
+      <End Role="film" EntitySet="film" />
+    </AssociationSet>
+    <AssociationSet Name="fk_saison_serie" Association="Self.fk_saison_serie">
+      <End Role="serie" EntitySet="serie" />
+      <End Role="saison" EntitySet="saison" />
+    </AssociationSet>
+    <AssociationSet Name="fk_serie_support" Association="Self.fk_serie_support">
+      <End Role="support" EntitySet="support" />
+      <End Role="serie" EntitySet="serie" />
+    </AssociationSet>
+    <AssociationSet Name="fk_support_genre" Association="Self.fk_support_genre">
+      <End Role="genre" EntitySet="genre" />
+      <End Role="support" EntitySet="support" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
