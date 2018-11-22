@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="videoppe3groupe2ModelStoreContainer" CdmEntityContainer="videoppe3groupe2Entities">
+    <EntitySetMapping Name="client">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.client">
+        <MappingFragment StoreEntitySet="client">
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="nomClient" ColumnName="nomClient" />
+          <ScalarProperty Name="prenomClient" ColumnName="prenomClient" />
+          <ScalarProperty Name="emailClient" ColumnName="emailClient" />
+          <ScalarProperty Name="dateAbonnementClient" ColumnName="dateAbonnementClient" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="pwd" ColumnName="pwd" />
+          <ScalarProperty Name="actif" ColumnName="actif" />
+          <ScalarProperty Name="admin" ColumnName="admin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="emprunt">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.emprunt">
+        <MappingFragment StoreEntitySet="emprunt">
+          <ScalarProperty Name="idEmprunt" ColumnName="idEmprunt" />
+          <ScalarProperty Name="dateEmprunt" ColumnName="dateEmprunt" />
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="idSupport" ColumnName="idSupport" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="episode">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.episode">
+        <MappingFragment StoreEntitySet="episode">
+          <ScalarProperty Name="idSerie" ColumnName="idSerie" />
+          <ScalarProperty Name="numSaison" ColumnName="numSaison" />
+          <ScalarProperty Name="numEpisode" ColumnName="numEpisode" />
+          <ScalarProperty Name="titreEpisode" ColumnName="titreEpisode" />
+          <ScalarProperty Name="duree" ColumnName="duree" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="film">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.film">
+        <MappingFragment StoreEntitySet="film">
+          <ScalarProperty Name="idFilm" ColumnName="idFilm" />
+          <ScalarProperty Name="duree" ColumnName="duree" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="genre">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.genre">
+        <MappingFragment StoreEntitySet="genre">
+          <ScalarProperty Name="idGenre" ColumnName="idGenre" />
+          <ScalarProperty Name="libelleGenre" ColumnName="libelleGenre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="saison">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.saison">
+        <MappingFragment StoreEntitySet="saison">
+          <ScalarProperty Name="idSerie" ColumnName="idSerie" />
+          <ScalarProperty Name="numSaison" ColumnName="numSaison" />
+          <ScalarProperty Name="anneeSaison" ColumnName="anneeSaison" />
+          <ScalarProperty Name="nbrEpisodesPrevus" ColumnName="nbrEpisodesPrevus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="serie">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.serie">
+        <MappingFragment StoreEntitySet="serie">
+          <ScalarProperty Name="idSerie" ColumnName="idSerie" />
+          <ScalarProperty Name="resumeSerie" ColumnName="resumeSerie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="support">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.support">
+        <MappingFragment StoreEntitySet="support">
+          <ScalarProperty Name="idSupport" ColumnName="idSupport" />
+          <ScalarProperty Name="titreSupport" ColumnName="titreSupport" />
+          <ScalarProperty Name="realisateur" ColumnName="realisateur" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="idGenre" ColumnName="idGenre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="videoppe3groupe2Model.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="videoppe3groupe2Model.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="videoppe3groupe2Model.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="videoppe3groupe2Model.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="videoppe3groupe2Model.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="videoppe3groupe2Model.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="videoppe3groupe2Model.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="videoppe3groupe2Model.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="videoppe3groupe2Model.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="videoppe3groupe2Model.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>
